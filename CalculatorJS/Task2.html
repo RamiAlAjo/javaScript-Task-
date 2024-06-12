@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Store</title>
+    <link rel="stylesheet" href="صورة.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .products,
+      .cart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+      }
+
+      .products {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      .product {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        text-align: center;
+      }
+
+      button {
+        background-color: blue;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: darkblue;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin: 5px 0;
+      }
+
+      .cart-item button {
+        background-color: red;
+        padding: 2px 5px;
+      }
+      img {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="products">
+      <div class="product" data-id="1" data-price="900">
+        <img src="./1.webp" alt="iPhone 13 Pro" />
+        <p>iPhone 13 Pro</p>
+        <p>900jd</p>
+        <button onclick="addToCart(1)">Add to cart</button>
+      </div>
+      <div class="product" data-id="2" data-price="150">
+        <img src="./2.webp" alt="Headset" />
+        <p>Headset</p>
+        <p>150jd</p>
+        <button onclick="addToCart(2)">Add to cart</button>
+      </div>
+      <div class="product" data-id="3" data-price="60">
+        <img src="./3.jfif" alt="Keyboard" />
+        <p>Keyboard</p>
+        <p>60jd</p>
+        <button onclick="addToCart(3)">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="cart">
+      <h2>Cart</h2>
+      <div id="cart-items"></div>
+      <p>Total: <span id="total-price">0</span>jd</p>
+      <button onclick="saveCart()">Save</button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        loadCart();
+      });
+
+      const products = {
+        1: { name: "iPhone 13 Pro", price: 900 },
+        2: { name: "Headset", price: 150 },
+        3: { name: "Keyboard", price: 60 },
+      };
+
+      function addToCart(productId) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+        if (cart[productId]) {
+          cart[productId].quantity++;
+        } else {
+          cart[productId] = {
+            name: products[productId].name,
+            price: products[productId].price,
+            quantity: 1,
+          };
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+      }
+
+      function loadCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || {};
+        let cartItems = document.getElementById("cart-items");
+        cartItems.innerHTML = "";
+        let totalPrice = 0;
+
+        for (let id in cart) {
+          let item = cart[id];
+          let itemRow = document.createElement("div");
+          itemRow.className = "cart-item";
+          itemRow.innerHTML = `
+            <span>${item.name}</span>
+            <span>${item.quantity} x ${item.price}jd</span>
+            <span>${item.quantity * item.price}jd</span>
+            <button onclick="removeFromCart(${id})">X</button>
+        `;
+          cartItems.appendChild(itemRow);
+          totalPrice += item.quantity * item.price;
+        }
+
+        document.getElementById("total-price").innerText = totalPrice;
+      }
+
+      function removeFromCart(productId) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+        if (cart[productId]) {
+          delete cart[productId];
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+      }
+
+      function saveCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || {};
+        sessionStorage.setItem("savedCart", JSON.stringify(cart));
+        alert("Cart saved!");
+      }
+    </script>
+  </body>
+</html>

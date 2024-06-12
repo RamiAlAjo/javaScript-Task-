@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      body {
+        background-color: #a8bf7e;
+        font-size: larger;
+        font-weight: bold;
+      }
+
+      .Main {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        width: 350px;
+        height: 350px;
+        background-color: #a0d0ea;
+        gap: 10px;
+        padding: 10px;
+        box-shadow: 0px 5px rgba(128, 128, 128, 0.307);
+        margin: auto;
+        margin-top: 50px;
+      }
+
+      .ResaultArea {
+        width: 100%;
+        grid-column: 1 / span 4;
+        background-color: #f1fbeb;
+        box-shadow: 0px 5px rgba(128, 128, 128, 0.307);
+      }
+
+      .NUM,
+      .equal {
+        display: grid;
+        background-color: white;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 5px rgba(128, 128, 128, 0.307);
+      }
+
+      .mathgreen {
+        display: grid;
+        background-color: #efff93;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 5px rgba(128, 128, 128, 0.307);
+      }
+
+      .Del {
+        display: grid;
+        background-color: #fba0ab;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 5px rgba(128, 128, 128, 0.307);
+      }
+
+      button {
+        width: 80px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0);
+        font-weight: bold;
+      }
+
+      button:hover {
+        background-color: rgb(198, 59, 59);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="Main">
+      <div class="ResaultArea" id="Result"></div>
+      <button class="NUM" id="1">1</button>
+      <button class="NUM" id="2">2</button>
+      <button class="NUM" id="3">3</button>
+      <button class="mathgreen" id="sum">+</button>
+      <button class="NUM" id="4">4</button>
+      <button class="NUM" id="5">5</button>
+      <button class="NUM" id="6">6</button>
+      <button class="mathgreen" id="sub">-</button>
+      <button class="NUM" id="7">7</button>
+      <button class="NUM" id="8">8</button>
+      <button class="NUM" id="9">9</button>
+      <button class="mathgreen" id="mult">x</button>
+      <button class="Del" id="del">C</button>
+      <button class="NUM" id="0">0</button>
+      <button class="equal" id="eq">=</button>
+      <button class="mathgreen" id="divaied">÷</button>
+    </div>
+
+    <script>
+      let Result = document.getElementById("Result");
+
+      function RemoveAll() {
+        Result.innerHTML = "";
+      }
+      document.getElementById("del").addEventListener("click", function () {
+        RemoveAll();
+      });
+
+      function printNum(number) {
+        Result.innerHTML += number;
+      }
+      document.getElementById("1").addEventListener("click", function () {
+        printNum(1);
+      });
+      document.getElementById("2").addEventListener("click", function () {
+        printNum(2);
+      });
+      document.getElementById("3").addEventListener("click", function () {
+        printNum(3);
+      });
+      document.getElementById("4").addEventListener("click", function () {
+        printNum(4);
+      });
+      document.getElementById("5").addEventListener("click", function () {
+        printNum(5);
+      });
+      document.getElementById("6").addEventListener("click", function () {
+        printNum(6);
+      });
+      document.getElementById("7").addEventListener("click", function () {
+        printNum(7);
+      });
+      document.getElementById("8").addEventListener("click", function () {
+        printNum(8);
+      });
+      document.getElementById("9").addEventListener("click", function () {
+        printNum(9);
+      });
+      document.getElementById("0").addEventListener("click", function () {
+        printNum(0);
+      });
+      document.getElementById("sum").addEventListener("click", function () {
+        printNum("+");
+      });
+      document.getElementById("sub").addEventListener("click", function () {
+        printNum("-");
+      });
+      document.getElementById("mult").addEventListener("click", function () {
+        printNum("*");
+      });
+      document.getElementById("divaied").addEventListener("click", function () {
+        printNum("/");
+      });
+
+      function Math() {
+        MathResult = eval(Result.innerHTML);
+        Result.innerHTML = MathResult;
+      }
+      document.getElementById("eq").addEventListener("click", function () {
+        Math();
+      });
+    </script>
+  </body>
+</html>
