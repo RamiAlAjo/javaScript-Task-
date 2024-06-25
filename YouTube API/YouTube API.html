@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>YouTube API & Fetch</h1>
+
+    <section></section>
+    <script>
+      const videoSection = document.querySelector("section");
+      const query = "your_query_here"; // Replace 'your_query_here' with the search term you want
+
+      fetch(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${query}&key=AIzaSyBMMOE-wbaWdD2ZGnwPU3PfUfh_YcsUqz8`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          data.items.forEach((el) => {
+            const videoId = el.id.videoId;
+            const thumbnailUrl = el.snippet.thumbnails.high.url;
+            const title = el.snippet.title;
+
+            videoSection.innerHTML += `
+              <a href="https://www.youtube.com/watch?v=${videoId}" class="yt-video">
+                <img src="${thumbnailUrl}" alt="${title}" />
+                <h3>${title}</h3>
+              </a>
+            `;
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    </script>
+  </body>
+</html>
